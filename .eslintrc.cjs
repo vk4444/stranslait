@@ -43,6 +43,8 @@ module.exports = {
     'prettier/prettier': 'error',
     'react/react-in-jsx-scope': 'off',
     'react/jsx-props-no-spreading': 'off',
+    'no-restricted-syntax': 'off',
+    'no-console': 'off',
   },
   settings: {
     react: {
