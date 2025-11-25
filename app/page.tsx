@@ -1,28 +1,28 @@
-"use client"
+'use client';
 
-import { useState, useEffect } from "react";
-import OpenAI from "openai";
+import { useState, useEffect } from 'react';
+import OpenAI from 'openai';
 
 export default function Home() {
   const client = new OpenAI({
     apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true
+    dangerouslyAllowBrowser: true,
   });
 
-  const [input, setInput] = useState('')
-  const [translations, setTranslations] = useState([])
+  const [input, setInput] = useState('');
+  const [translations, setTranslations] = useState([]);
 
   useEffect(() => {
     if (translations) {
-      for (const translation of translations){
-        console.log(translation)
+      for (const translation of translations) {
+        console.log(translation);
       }
     }
   }, [translations]);
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
-    event.preventDefault()
-    console.log(input)
+    event.preventDefault();
+    console.log(input);
 
     try {
       const response = await client.responses.create({
@@ -34,37 +34,29 @@ export default function Home() {
         "Translation 3",
     ]
 }`,
-        input: input,
-      })
+        input,
+      });
 
-
-      if(response.output_text) {
-        const parsedResponse = JSON.parse(response.output_text)
-        setTranslations(parsedResponse.translations)
-        console.log(response.output_text)
+      if (response.output_text) {
+        const parsedResponse = JSON.parse(response.output_text);
+        setTranslations(parsedResponse.translations);
+        console.log(response.output_text);
       }
-
     } catch (error) {
-      console.error('Translation Failed')
+      console.error('Translation Failed');
     }
-    
-
-    
-
-
-  }
+  };
 
   return (
-      <main>
-        <form onSubmit={handleSubmit}>
-          <input 
-            type="text"
-            value={input}
-            onChange={({ target }) => setInput(target.value)}
-          />
-          <button type="submit">Translate</button>
-        </form>
-      </main>
+    <main>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={input}
+          onChange={({ target }) => setInput(target.value)}
+        />
+        <button type="submit">Translate</button>
+      </form>
+    </main>
   );
 }
-
