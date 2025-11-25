@@ -21,6 +21,24 @@ module.exports = {
     'prettier',
   ],
   plugins: ['@typescript-eslint', 'react', 'react-hooks', 'import', 'prettier'],
+  overrides: [
+    {
+      // Use the default ESLint parser for JS/CJS config files so typescript-eslint's
+      // `parserOptions.project` (type-aware linting) is not applied to them.
+      files: [
+        '.eslintrc.cjs',
+        '.eslintrc.js',
+        '*.config.js',
+        '*.config.cjs',
+        'webpack.config.js',
+      ],
+      parser: 'espree',
+      parserOptions: {
+        ecmaVersion: 2021,
+        sourceType: 'script',
+      },
+    },
+  ],
   rules: {
     'prettier/prettier': 'error',
     'react/react-in-jsx-scope': 'off',
